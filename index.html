@@ -10,620 +10,123 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
-    <style>
-        :root {
-            --gold: #B8860B;
-            --gold-light: #DAA520;
-            --black: #0D0D0D;
-            --black-soft: #1A1A1A;
-            --pearl: #F8F4EE;
-            --white: #FFFFFF;
-            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* --- Luxury Reveal --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Gold Shimmer --- */
-        .shimmer {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .shimmer::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 45%,
-                rgba(255, 255, 255, 0.3) 50%,
-                transparent 55%
-            );
-            transform: rotate(45deg);
-            animation: shimmer 4s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translate(-100%, -100%) rotate(45deg); }
-            100% { transform: translate(100%, 100%) rotate(45deg); }
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        body {
-            background-color: var(--black);
-            color: var(--pearl);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        h1, h2, h3, h4, .serif {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--black);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 10px;
-        }
-
-        /* --- Navigation --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(13, 13, 13, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(184, 134, 11, 0.2);
-            transition: var(--transition);
-        }
-
-        nav.scrolled {
-            padding: 1rem 5%;
-            background: var(--black);
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--gold);
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            color: var(--pearl);
-            text-decoration: none;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--gold);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--gold);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* --- Hero Section --- */
-        #home {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            padding: 0 5%;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            z-index: 2;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            font-weight: 400;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            margin-bottom: 2.5rem;
-            color: var(--gold);
-            text-transform: uppercase;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1.2rem 3rem;
-            background: var(--gold);
-            color: var(--black);
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: var(--transition);
-            border: 1px solid var(--gold);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            background: transparent;
-            color: var(--gold);
-        }
-
-        /* --- Categories --- */
-        .categories-strip {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 4rem 5%;
-            background: var(--black-soft);
-            flex-wrap: wrap;
-        }
-
-        .category-item {
-            padding: 1rem 2.5rem;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-            cursor: pointer;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
-        }
-
-        .category-item:hover, .category-item.active {
-            background: var(--gold);
-            color: var(--black);
-            border-color: var(--gold);
-        }
-
-        /* --- Products Section --- */
-        section {
-            padding: 8rem 5%;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .section-title span {
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 0.9rem;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .product-card {
-            background: var(--black-soft);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(184, 134, 11, 0.4);
-        }
-
-        .product-image {
-            height: 380px;
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.1);
-        }
-
-        .product-info {
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .product-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 400;
-        }
-
-        .product-meta {
-            color: var(--gold);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .whatsapp-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            padding: 1rem;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            width: 100%;
-        }
-
-        .whatsapp-btn:hover {
-            background: var(--gold);
-            color: var(--black);
-        }
-
-        /* --- Festive Banner --- */
-        .festive-banner {
-            background: linear-gradient(to right, rgba(13,13,13,0.9), rgba(13,13,13,0.7)), 
-                        url('https://images.unsplash.com/photo-1573059224875-f140444567ec?q=80&w=2000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            padding: 6rem 5%;
-            text-align: center;
-            margin: 4rem 0;
-            border-top: 1px solid var(--gold);
-            border-bottom: 1px solid var(--gold);
-        }
-
-        .festive-banner h2 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--gold);
-        }
-
-        /* --- Trust Badges --- */
-        .trust-badges {
-            display: flex;
-            justify-content: space-around;
-            padding: 5rem 5%;
-            background: var(--black-soft);
-            flex-wrap: wrap;
-            gap: 3rem;
-        }
-
-        .badge-item {
-            text-align: center;
-            max-width: 250px;
-        }
-
-        .badge-item i {
-            font-size: 3rem;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-        }
-
-        .badge-item h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .badge-item p {
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-
-        /* --- Testimonials --- */
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            padding: 3rem;
-            background: var(--black-soft);
-            border-left: 3px solid var(--gold);
-        }
-
-        .testimonial-card p {
-            font-style: italic;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .customer-name {
-            display: block;
-            color: var(--gold);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* --- Contact Form --- */
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .inquiry-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 1.2rem;
-            background: var(--black-soft);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--pearl);
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: var(--gold);
-        }
-
-        /* --- Floating WhatsApp --- */
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            background: #25D366;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            z-index: 9999;
-            transition: var(--transition);
-        }
-
-        .floating-whatsapp:hover {
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        /* --- Footer --- */
-        footer {
-            padding: 5rem 5%;
-            background: var(--black-soft);
-            border-top: 1px solid rgba(184, 134, 11, 0.2);
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            color: var(--gold);
-            margin-bottom: 2rem;
-            display: block;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .social-links a {
-            font-size: 1.5rem;
-            color: var(--pearl);
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            color: var(--gold);
-        }
-
-        .copyright {
-            opacity: 0.5;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        /* --- Mobile Responsiveness --- */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .contact-container { grid-template-columns: 1fr; }
-            .hero-content h1 { font-size: 3.5rem; }
-            .categories-strip { gap: 1rem; }
-            .category-item { padding: 0.8rem 1.5rem; font-size: 0.75rem; }
-        }
-
-        /* Page Management */
-        .page {
-            display: none;
-        }
-        .page.active {
-            display: block;
-        }
-    </style>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <!-- Floating WhatsApp -->
-    <a href="https://wa.me/919000000000" target="_blank" class="floating-whatsapp">
+    <!-- Cinematic Preloader -->
+    <div id="preloader">
+        <div class="preloader-logo serif">AURA</div>
+        <div class="preloader-bar">
+            <div class="preloader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress"></div>
+
+    <!-- Custom Luxury Cursor -->
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-ring"></div>
+
+    <!-- Floating Interactive Particles Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Floating WhatsApp Anchor -->
+    <a href="https://wa.me/919000000000" target="_blank" class="floating-whatsapp magnet-target" aria-label="Chat on WhatsApp">
         <i class="ph-fill ph-whatsapp-logo"></i>
     </a>
 
-    <!-- Navigation -->
+    <!-- Navigation Bar -->
     <nav id="navbar">
-        <a href="#" class="logo serif" onclick="showPage('home')">AURA</a>
+        <a href="#" class="logo serif magnet-target" onclick="showPage('home')">AURA<span>.</span></a>
         <div class="nav-links">
-            <a href="#home" onclick="showPage('home')">Home</a>
-            <a href="#collections" onclick="showPage('collections')">Collections</a>
-            <a href="#about" onclick="showPage('about')">Our Story</a>
-            <a href="#contact" onclick="showPage('contact')">Contact</a>
+            <a href="#home" class="active magnet-target" onclick="showPage('home')">Home</a>
+            <a href="#collections" class="magnet-target" onclick="showPage('collections')">Collections</a>
+            <a href="#custom-studio" class="magnet-target" onclick="showPage('custom-studio')">Bespoke Studio</a>
+            <a href="#gold-rates" class="magnet-target" onclick="showPage('gold-rates')">Live Rates</a>
+            <a href="#booking" class="magnet-target" onclick="showPage('booking')">Book Salon</a>
+            <a href="#about" class="magnet-target" onclick="showPage('about')">Our Story</a>
+            <a href="#contact" class="magnet-target" onclick="showPage('contact')">Contact</a>
+            <a href="https://wa.me/919000000000" target="_blank" class="mobile-cta-link cta-button magnet-target" style="padding: 1rem 2rem; font-size: 0.8rem; text-align: center; margin-top: 1.5rem; width: 100%;">WhatsApp Us</a>
         </div>
         <div class="nav-cta">
-            <a href="https://wa.me/919000000000" class="cta-button" style="padding: 0.8rem 1.5rem; font-size: 0.8rem;">WhatsApp Us</a>
+            <a href="https://wa.me/919000000000" target="_blank" class="cta-button magnet-target" style="padding: 0.8rem 1.8rem; font-size: 0.75rem;">WhatsApp Us</a>
         </div>
+        <button class="mobile-nav-toggle magnet-target" aria-label="Toggle Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
     </nav>
 
-    <!-- --- HOME PAGE --- -->
+    <!-- ========================================== -->
+    <!-- HOME PAGE -->
+    <!-- ========================================== -->
     <div id="home-page" class="page active">
+        <!-- Hero Header -->
         <header id="home">
-            <div class="hero-content reveal">
-                <p style="animation: fadeInUp 1s ease both;">Since 1998 • Coimbatore</p>
-                <h1 class="serif" style="animation: fadeInUp 1s ease 0.2s both;">Crafted with Love.<br>Worn with Pride.</h1>
-                <a href="#collections" class="cta-button shimmer" onclick="showPage('collections')" style="animation: fadeInUp 1s ease 0.4s both;">Explore Collection</a>
+            <div class="hero-content">
+                <p class="hero-sub">Since 1998 • Coimbatore</p>
+                <h1 class="serif">Crafted with <span>Love</span>.<br>Worn with Pride.</h1>
+                <a href="#collections" class="cta-button magnet-target" onclick="showPage('collections')">Explore Collection</a>
             </div>
         </header>
 
-        <style>
-            @keyframes fadeInUp {
-                from { opacity: 0; transform: translateY(30px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            #home {
-                animation: slowZoom 20s infinite alternate;
-            }
-            @keyframes slowZoom {
-                from { background-size: 100%; }
-                to { background-size: 110%; }
-            }
-        </style>
-
+        <!-- Category Horizontal Strip -->
         <div class="categories-strip">
-            <div class="category-item active" onclick="filterProducts('all', event)">Gold</div>
-            <div class="category-item" onclick="filterProducts('diamond', event)">Diamond</div>
-            <div class="category-item" onclick="filterProducts('silver', event)">Silver</div>
-            <div class="category-item" onclick="filterProducts('bridal', event)">Bridal</div>
-            <div class="category-item" onclick="filterProducts('custom', event)">Customized</div>
+            <div class="category-item active magnet-target" onclick="filterProducts('all', event)">All Series</div>
+            <div class="category-item magnet-target" onclick="filterProducts('gold', event)">Gold</div>
+            <div class="category-item magnet-target" onclick="filterProducts('diamond', event)">Diamond</div>
+            <div class="category-item magnet-target" onclick="filterProducts('silver', event)">Silver</div>
+            <div class="category-item magnet-target" onclick="filterProducts('bridal', event)">Bridal Sets</div>
         </div>
 
-        <section id="featured" class="reveal">
+        <!-- Featured Products Section -->
+        <section id="featured">
             <div class="section-title">
                 <span>The Signature Series</span>
                 <h2 class="serif">Featured Masterpieces</h2>
             </div>
             <div class="product-grid" id="featured-grid">
-                <!-- 6 Featured Items -->
+                <!-- Staggered Products load dynamically via js/main.js -->
             </div>
         </section>
 
-        <div class="festive-banner reveal">
-            <span style="letter-spacing: 5px; text-transform: uppercase; color: var(--pearl);">Celebration of Tradition</span>
-            <h2 class="serif">Exclusive Wedding Season Collection</h2>
-            <p style="max-width: 700px; margin: 0 auto 2.5rem; line-height: 1.8;">Discover our curated selection of temple jewelry and contemporary bridal sets designed for the modern Indian bride.</p>
-            <a href="#collections" class="cta-button shimmer" onclick="showPage('collections')">View Bridal Edit</a>
+        <!-- Festive Celebration Banner -->
+        <div class="festive-banner">
+            <span style="letter-spacing: 5px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1.5rem; font-weight: 500;">Celebration of Tradition</span>
+            <h2 class="serif">Exclusive <span>Wedding Season</span> Collection</h2>
+            <p>Discover our highly curated selection of antique temple jewelry and contemporary diamond bridal sets, designed with love for the modern Indian bride.</p>
+            <a href="#collections" class="cta-button magnet-target" onclick="showPage('collections')">View Bridal Edit</a>
         </div>
 
+        <!-- Trust Badges -->
         <div class="trust-badges">
             <div class="badge-item">
                 <i class="ph ph-seal-check"></i>
                 <h4 class="serif">BIS Hallmarked</h4>
-                <p>100% certified 22kt and 18kt gold purity guaranteed.</p>
+                <p>100% certified 22kt and 18kt gold purity guaranteed with hallmark seal.</p>
             </div>
             <div class="badge-item">
                 <i class="ph ph-calendar-star"></i>
                 <h4 class="serif">25+ Years</h4>
-                <p>Crafting memories and building trust since 1998.</p>
+                <p>Crafting memories, defining heritage, and building trust since 1998.</p>
             </div>
             <div class="badge-item">
                 <i class="ph ph-users-three"></i>
                 <h4 class="serif">10,000+ Happy Souls</h4>
-                <p>Part of thousands of weddings and celebrations across India.</p>
+                <p>A cherished part of thousands of weddings and family celebrations across India.</p>
             </div>
         </div>
 
+        <!-- Customer Testimonials -->
         <section id="testimonials">
             <div class="section-title">
                 <span>Voices of Trust</span>
@@ -646,7 +149,9 @@
         </section>
     </div>
 
-    <!-- --- COLLECTIONS PAGE --- -->
+    <!-- ========================================== -->
+    <!-- COLLECTIONS PAGE -->
+    <!-- ========================================== -->
     <div id="collections-page" class="page">
         <section style="padding-top: 10rem;">
             <div class="section-title">
@@ -654,44 +159,325 @@
                 <h2 class="serif">Our Collections</h2>
             </div>
             
-            <div class="categories-strip" style="background: transparent; padding: 0 0 4rem 0;">
-                <div class="category-item active" onclick="filterProducts('all', event)">All</div>
-                <div class="category-item" onclick="filterProducts('gold', event)">Gold</div>
-                <div class="category-item" onclick="filterProducts('diamond', event)">Diamond</div>
-                <div class="category-item" onclick="filterProducts('silver', event)">Silver</div>
-                <div class="category-item" onclick="filterProducts('bridal', event)">Bridal Sets</div>
-                <div class="category-item" onclick="filterProducts('necklace', event)">Necklaces</div>
-                <div class="category-item" onclick="filterProducts('earring', event)">Earrings</div>
+            <div class="categories-strip" style="background: transparent; border-bottom: none; padding: 0 0 5rem 0;">
+                <div class="category-item active magnet-target" onclick="filterProducts('all', event)">All Catalog</div>
+                <div class="category-item magnet-target" onclick="filterProducts('gold', event)">Gold</div>
+                <div class="category-item magnet-target" onclick="filterProducts('diamond', event)">Diamond</div>
+                <div class="category-item magnet-target" onclick="filterProducts('silver', event)">Silver</div>
+                <div class="category-item magnet-target" onclick="filterProducts('bridal', event)">Bridal Sets</div>
+                <div class="category-item magnet-target" onclick="filterProducts('custom', event)">Bespoke</div>
             </div>
 
             <div class="product-grid" id="collections-grid">
-                <!-- Full Collection Items -->
+                <!-- Catalog load dynamically via js/main.js -->
             </div>
         </section>
     </div>
 
-    <!-- --- ABOUT PAGE --- -->
-    <div id="about-page" class="page">
+    <!-- ========================================== -->
+    <!-- BESPOKE CUSTOM DESIGN STUDIO PAGE -->
+    <!-- ========================================== -->
+    <div id="custom-studio-page" class="page">
         <section style="padding-top: 10rem;">
-            <div class="contact-container">
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" alt="Founder" style="width: 100%; border: 1px solid var(--gold); padding: 10px;">
+            <div class="section-title">
+                <span>AURA HOLOGRAPHICS</span>
+                <h2 class="serif">Bespoke Design Studio</h2>
+            </div>
+            
+            <div class="studio-container">
+                <!-- Left Column: Premium Live 3D Interactive Holographic Preview -->
+                <div class="preview-panel">
+                    <div class="hologram-stage">
+                        <div class="hologram-glow" id="studio-glow-element"></div>
+                        <!-- Central Gemstone Render Display -->
+                        <div class="interactive-hologram" id="studio-hologram">
+                            <i class="ph-fill ph-sketch-logo gem-icon" id="studio-gem-element"></i>
+                            <div class="ring-band" id="studio-band-element"></div>
+                        </div>
+                        <div class="stage-base">
+                            <span class="pulse-ring"></span>
+                            <span class="pulse-ring-outer"></span>
+                        </div>
+                    </div>
+                    <div class="preview-specifications">
+                        <h4 class="serif" id="spec-title">Platinum Solitaire Diamond</h4>
+                        <p id="spec-description">Pure Platinum 950 base with a certified flawless D-color 1.5 Carat Solitaire Diamond gemstone.</p>
+                    </div>
                 </div>
-                <div class="about-content">
-                    <span style="color: var(--gold); letter-spacing: 3px;">OUR HERITAGE</span>
-                    <h2 class="serif" style="font-size: 3rem; margin: 1rem 0 2rem;">A Legacy of Pure Craftsmanship</h2>
-                    <p style="line-height: 1.8; margin-bottom: 1.5rem; opacity: 0.8;">Founded in the heart of Coimbatore, Aura Luxury Jewels began as a small family-run boutique with a singular vision: to create jewelry that tells a story. Over 25 years, we have evolved into one of the city's most trusted destinations for pure gold and exquisite diamonds.</p>
-                    <p style="line-height: 1.8; margin-bottom: 1.5rem; opacity: 0.8;">Our commitment to quality is unwavering. Every piece in our showroom is BIS Hallmarked, ensuring that you receive exactly what you pay for. We believe that jewelry is not just an ornament, but an investment of emotions and heritage.</p>
-                    <div style="margin-top: 2rem; border-top: 1px solid rgba(184, 134, 11, 0.3); padding-top: 2rem;">
-                        <h4 class="serif" style="color: var(--gold); margin-bottom: 0.5rem;">S. Raghavan</h4>
-                        <p style="font-size: 0.9rem; opacity: 0.6;">Founder & Master Craftsman</p>
+                
+                <!-- Right Column: Bespoke Controls -->
+                <div class="controls-panel">
+                    <h3 class="serif" style="font-size: 1.8rem; margin-bottom: 2rem; color: var(--pearl);">Tailor Your Masterpiece</h3>
+                    
+                    <!-- Control Block: Metals -->
+                    <div class="control-group">
+                        <label class="control-label">Select Precious Base Metal</label>
+                        <div class="studio-options">
+                            <button class="studio-opt active" onclick="updateStudioMetal(this, 'platinum', 6800, 'Platinum 950', 'Pure Platinum 950 base')">
+                                <span>Platinum 950</span>
+                            </button>
+                            <button class="studio-opt" onclick="updateStudioMetal(this, 'yellow-gold', 5850, '22K Yellow Gold', 'Traditional 22K yellow gold frame')">
+                                <span>22K Gold</span>
+                            </button>
+                            <button class="studio-opt" onclick="updateStudioMetal(this, 'rose-gold', 5980, '18K Rose Gold', 'Elegant 18K rose gold frame')">
+                                <span>18K Rose Gold</span>
+                            </button>
+                            <button class="studio-opt" onclick="updateStudioMetal(this, 'silver', 95, 'Sterling Silver 925', 'Premium 925 sterling silver base')">
+                                <span>Silver 925</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Control Block: Gemstones -->
+                    <div class="control-group">
+                        <label class="control-label">Choose Precious Gemstone</label>
+                        <div class="studio-options">
+                            <button class="studio-opt active" onclick="updateStudioGem(this, 'diamond', 250000, 'Solitaire Diamond', 'certified flawless D-color Solitaire Diamond')">
+                                <span>Diamond</span>
+                            </button>
+                            <button class="studio-opt" onclick="updateStudioGem(this, 'emerald', 120000, 'Vivid Emerald', 'deep green Zambian Emerald')">
+                                <span>Emerald</span>
+                            </button>
+                            <button class="studio-opt" onclick="updateStudioGem(this, 'sapphire', 140000, 'Royal Blue Sapphire', 'vibrant Kashmir Blue Sapphire')">
+                                <span>Sapphire</span>
+                            </button>
+                            <button class="studio-opt" onclick="updateStudioGem(this, 'ruby', 110000, 'Burmese Ruby', 'fiery pigeon-blood Burmese Ruby')">
+                                <span>Ruby</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Control Block: Carat Slider -->
+                    <div class="control-group">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                            <label class="control-label" style="margin-bottom: 0;">Gemstone Carat Weight</label>
+                            <span class="carat-badge" id="carat-val-display">1.5 Ct</span>
+                        </div>
+                        <input type="range" class="studio-slider" min="0.5" max="5.0" step="0.1" value="1.5" id="studio-carat-slider" oninput="updateStudioCarat(this.value)">
+                    </div>
+                    
+                    <!-- Price Calculation Display -->
+                    <div class="pricing-panel">
+                        <div class="price-row">
+                            <span>Estimated Custom Price</span>
+                            <h2 class="serif" id="studio-live-price">₹4,25,000</h2>
+                        </div>
+                        <p style="font-size: 0.75rem; opacity: 0.5; margin-top: 0.5rem; line-height: 1.4;">Price includes hallmarked metal weight, gemstone selection, premium labor fees, and standard GST. Final weight is certified upon creation.</p>
+                    </div>
+                    
+                    <a href="https://wa.me/919000000000" id="studio-inquire-btn" target="_blank" class="cta-button magnet-target" style="width: 100%; text-align: center; margin-top: 2rem;">Inquire for Custom Design</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LIVE METAL RATES BOARD PAGE -->
+    <!-- ========================================== -->
+    <div id="gold-rates-page" class="page">
+        <section style="padding-top: 10rem;">
+            <div class="section-title">
+                <span>TODAY'S RATES IN COIMBATORE</span>
+                <h2 class="serif">Live Metal Rate Board</h2>
+            </div>
+            
+            <div class="rates-container">
+                <!-- Left Side: Live Rate Grid Cards -->
+                <div class="rates-cards-grid">
+                    <div class="rate-card-premium">
+                        <span class="rate-tag">24K PURE GOLD</span>
+                        <h3 class="serif" id="rate-24k">₹8,150</h3>
+                        <p>per gram • 99.9% Purity</p>
+                        <span class="rate-sovereign" id="sovereign-24k">₹65,200 per 8g</span>
+                    </div>
+                    <div class="rate-card-premium">
+                        <span class="rate-tag" style="color: var(--gold);">22K ORNAMENT GOLD</span>
+                        <h3 class="serif" id="rate-22k" style="color: var(--gold-light);">₹7,545</h3>
+                        <p>per gram • 91.6% Purity (BIS 916)</p>
+                        <span class="rate-sovereign" id="sovereign-22k">₹60,360 per 8g</span>
+                    </div>
+                    <div class="rate-card-premium">
+                        <span class="rate-tag" style="color: #E5E4E2;">PLATINUM 950</span>
+                        <h3 class="serif" id="rate-plat" style="color: #F5EFEB;">₹3,620</h3>
+                        <p>per gram • Certified Purity</p>
+                        <span class="rate-change-indicator up" style="color: var(--gold); font-size: 0.75rem; letter-spacing: 1px;"><i class="ph ph-trend-up"></i> Stable</span>
+                    </div>
+                    <div class="rate-card-premium">
+                        <span class="rate-tag" style="color: #C0C0C0;">STERLING SILVER</span>
+                        <h3 class="serif" id="rate-silver" style="color: #E2E2E2;">₹98</h3>
+                        <p>per gram • 92.5% Fine</p>
+                        <span class="rate-change-indicator down" style="color: #ff5555; font-size: 0.75rem; letter-spacing: 1px;"><i class="ph ph-trend-down"></i> -₹1.20 Today</span>
+                    </div>
+                </div>
+                
+                <!-- Right Side: Interactive Purchase Estimator -->
+                <div class="calculator-panel">
+                    <h3 class="serif" style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--pearl);">Rate Calculator</h3>
+                    <p style="opacity: 0.6; font-size: 0.9rem; margin-bottom: 2rem;">Estimate the raw cost of your gold jewelry based on current Coimbatore market rates.</p>
+                    
+                    <div class="form-group">
+                        <label class="control-label">Select Metal Purity</label>
+                        <select class="studio-select" id="calc-purity" onchange="calculateGoldEstimate()" style="width: 100%; border: var(--border-glass); background: rgba(10, 10, 11, 0.95); padding: 1.2rem; color: var(--pearl); font-size: 0.9rem; margin-bottom: 1.5rem; appearance: none; border-radius: 0;">
+                            <option value="7545" selected>22K Gold (BIS 916)</option>
+                            <option value="8150">24K Gold (999 Pure)</option>
+                            <option value="3620">Platinum 950</option>
+                            <option value="98">Sterling Silver 925</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">Enter Target Weight (in grams)</label>
+                        <input type="number" class="studio-input" id="calc-weight" value="10" min="0.1" step="0.1" oninput="calculateGoldEstimate()" style="width: 100%; border: var(--border-glass); background: rgba(10, 10, 11, 0.5); padding: 1.2rem; color: var(--pearl); font-size: 1rem; font-family: inherit; border-radius: 0; margin-bottom: 1.5rem;">
+                    </div>
+                    
+                    <!-- Dynamic Summary Sheet -->
+                    <div class="calc-results" style="margin-top: 2rem; border-top: 1px dashed rgba(212, 175, 55, 0.15); padding-top: 1.5rem;">
+                        <div class="results-row" style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.85rem; color: var(--pearl-muted);">
+                            <span>Base Metal Value</span>
+                            <span id="calc-base-val">₹75,450</span>
+                        </div>
+                        <div class="results-row" style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.85rem; color: var(--pearl-muted);">
+                            <span>Making Charges (est. 12%)</span>
+                            <span id="calc-making-val">₹9,054</span>
+                        </div>
+                        <div class="results-row" style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.85rem; color: var(--pearl-muted);">
+                            <span>GST Tax (3%)</span>
+                            <span id="calc-gst-val">₹2,535</span>
+                        </div>
+                        <div class="results-row total" style="display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid rgba(212, 175, 55, 0.25); font-weight: 500; font-size: 1.1rem;">
+                            <span>Total Estimated Investment</span>
+                            <span id="calc-total-val" style="color: var(--gold-light);">₹87,039</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/919000000000" target="_blank" class="cta-button magnet-target" style="width: 100%; text-align: center; margin-top: 1.5rem;">Lock In This Rate</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PRIVATE SALON BOOKING PAGE -->
+    <!-- ========================================== -->
+    <div id="booking-page" class="page">
+        <section style="padding-top: 10rem;">
+            <div class="section-title">
+                <span>BESPOKE CONSULTATION</span>
+                <h2 class="serif">Private Salon Booking</h2>
+            </div>
+            
+            <div class="booking-container">
+                <div class="booking-steps-panel">
+                    <h3 class="serif" style="font-size: 1.8rem; margin-bottom: 2rem; color: var(--pearl);">Schedule a Rendezvous</h3>
+                    <form class="salon-booking-form" id="salon-booking-form">
+                        
+                        <!-- Consultation Type Selector -->
+                        <div class="form-group">
+                            <label class="control-label">Consultation Focus</label>
+                            <div class="booking-grid-select">
+                                <div class="booking-grid-opt active" onclick="setBookingFocus(this, 'Bridal Registry Consultation')">
+                                    <i class="ph ph-crown" style="font-size: 2rem; color: var(--gold); margin-bottom: 0.8rem; display: block;"></i>
+                                    <h5>Bridal Registry</h5>
+                                    <p>Select wedding masterworks</p>
+                                </div>
+                                <div class="booking-grid-opt" onclick="setBookingFocus(this, 'Bespoke Diamond Customization')">
+                                    <i class="ph ph-sketch-logo" style="font-size: 2rem; color: var(--gold); margin-bottom: 0.8rem; display: block;"></i>
+                                    <h5>Bespoke Diamond</h5>
+                                    <p>Custom rings & necklets</p>
+                                </div>
+                                <div class="booking-grid-opt" onclick="setBookingFocus(this, 'Heritage Gold Investment Advisory')">
+                                    <i class="ph ph-coins" style="font-size: 2rem; color: var(--gold); margin-bottom: 0.8rem; display: block;"></i>
+                                    <h5>Gold Investment</h5>
+                                    <p>Sovereign & bars advisory</p>
+                                </div>
+                            </div>
+                            <input type="hidden" id="booking-focus" value="Bridal Registry Consultation">
+                        </div>
+                        
+                        <!-- Master Craftsman Selector -->
+                        <div class="form-group">
+                            <label class="control-label">Select Advisor</label>
+                            <select class="studio-select" id="booking-advisor" required style="width: 100%; border: var(--border-glass); background: rgba(10, 10, 11, 0.95); padding: 1.2rem; color: var(--pearl); font-size: 0.9rem; margin-bottom: 1.5rem; appearance: none; border-radius: 0;">
+                                <option value="S. Raghavan (Founder & Master Craftsman)">S. Raghavan — Founder & Master Craftsman</option>
+                                <option value="Priya Seth (GIA Diamond Specialist)">Priya Seth — GIA Diamond Specialist</option>
+                                <option value="Vikram Raj (Heritage Gold Custodian)">Vikram Raj — Heritage Gold Custodian</option>
+                            </select>
+                        </div>
+                        
+                        <div class="booking-date-time-grid">
+                            <div class="form-group">
+                                <label class="control-label">Select Date</label>
+                                <input type="date" class="studio-input" id="booking-date" required style="width: 100%; border: var(--border-glass); background: rgba(10, 10, 11, 0.5); padding: 1.2rem; color: var(--pearl); border-radius: 0; margin-bottom: 1.5rem;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="control-label">Select Time Slot</label>
+                                <select class="studio-select" id="booking-time" required style="width: 100%; border: var(--border-glass); background: rgba(10, 10, 11, 0.95); padding: 1.2rem; color: var(--pearl); font-size: 0.9rem; margin-bottom: 1.5rem; appearance: none; border-radius: 0;">
+                                    <option value="10:30 AM - 12:00 PM">10:30 AM - 12:00 PM (Morning Slot)</option>
+                                    <option value="02:30 PM - 04:00 PM">02:30 PM - 04:00 PM (Mid-day Slot)</option>
+                                    <option value="05:30 PM - 07:00 PM">05:30 PM - 07:00 PM (Evening Slot)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="booking-date-time-grid">
+                            <div class="form-group">
+                                <input type="text" class="studio-input" id="booking-name" placeholder="Your Full Name" required style="width: 100%; border: var(--border-glass); background: rgba(10, 10, 11, 0.5); padding: 1.2rem; color: var(--pearl); border-radius: 0; margin-bottom: 1.5rem;">
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" class="studio-input" id="booking-phone" placeholder="Phone Number" required style="width: 100%; border: var(--border-glass); background: rgba(10, 10, 11, 0.5); padding: 1.2rem; color: var(--pearl); border-radius: 0; margin-bottom: 1.5rem;">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="cta-button magnet-target" style="width: 100%; margin-top: 1.5rem;">Secure Showroom Slot</button>
+                    </form>
+                </div>
+                
+                <div class="booking-details-panel">
+                    <div class="showroom-preview-card" style="border: var(--border-glass); background: var(--black-card); overflow: hidden; height: 100%;">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="Private Luxury Showroom Suite" style="width: 100%; height: 300px; object-fit: cover;">
+                        <div class="showroom-card-overlay" style="padding: 2.5rem;">
+                            <h4 class="serif" style="font-size: 1.5rem; color: var(--gold-light); margin-bottom: 1rem;">The Coimbatore Salon Lounge</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 2rem; line-height: 1.7;">A private, high-security luxury consultation room designed to offer you the ultimate comfort and guidance during your heirloom select journey.</p>
+                            <ul class="showroom-amenities" style="list-style: none;">
+                                <li style="display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--pearl); margin-bottom: 1rem;"><i class="ph ph-sparkles" style="color: var(--gold); font-size: 1.2rem;"></i> One-on-one tailored master craftsman consultation</li>
+                                <li style="display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--pearl); margin-bottom: 1rem;"><i class="ph ph-shield-check" style="color: var(--gold); font-size: 1.2rem;"></i> Complete confidentiality & secure private vault room access</li>
+                                <li style="display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--pearl); margin-bottom: 1rem;"><i class="ph ph-coffee" style="color: var(--gold); font-size: 1.2rem;"></i> Complimentary traditional South Indian filter coffee & refreshments</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- --- CONTACT PAGE --- -->
+    <!-- ========================================== -->
+    <!-- ABOUT PAGE -->
+    <!-- ========================================== -->
+    <!-- ========================================== -->
+    <div id="about-page" class="page">
+        <section style="padding-top: 10rem;">
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1000&auto=format&fit=crop" alt="Founder & Master Craftsman working on Jewelry">
+                </div>
+                <div class="about-content">
+                    <span style="color: var(--gold); letter-spacing: 5px; text-transform: uppercase; font-size: 0.8rem; font-weight: 500;">OUR HERITAGE</span>
+                    <h3 class="serif">A Legacy of Pure Craftsmanship</h3>
+                    <p>Founded in the heart of Coimbatore, Aura Luxury Jewels began as a small boutique with a singular vision: to create heirloom jewelry that tells an emotional story. Over 25 years, we have evolved into one of the city's most trusted destinations for pure gold and exquisite diamond masterworks.</p>
+                    <p>Our commitment to purity is absolute. Every piece in our showroom is BIS Hallmarked, ensuring that you receive the exact gold weight and grade specified. We believe jewelry is not just an ornament, but an investment of emotions, memories, and rich heritage.</p>
+                    <div class="signature">
+                        <h4>S. Raghavan</h4>
+                        <p>Founder & Master Craftsman</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- CONTACT PAGE -->
+    <!-- ========================================== -->
     <div id="contact-page" class="page">
         <section style="padding-top: 10rem;">
             <div class="section-title">
@@ -701,8 +487,8 @@
             
             <div class="contact-container">
                 <div>
-                    <h3 class="serif" style="font-size: 2rem; margin-bottom: 1.5rem;">Inquire for Pricing</h3>
-                    <p style="margin-bottom: 2.5rem; opacity: 0.7;">Fill out the form below or chat with us directly on WhatsApp for real-time pricing and availability of our pieces.</p>
+                    <h3 class="serif" style="font-size: 2rem; margin-bottom: 1.5rem; font-weight: 300;">Inquire for Pricing</h3>
+                    <p style="margin-bottom: 3.5rem; opacity: 0.7; font-size: 0.95rem; line-height: 1.8;">Fill out the inquiries form below or chat with us directly on WhatsApp for real-time pricing, certificate verification, and custom design booking.</p>
                     
                     <form class="inquiry-form">
                         <div class="form-group">
@@ -729,151 +515,53 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <textarea rows="4" placeholder="Mention the occasion or specific requirements..."></textarea>
+                            <textarea rows="4" placeholder="Mention the occasion or custom design specifications..."></textarea>
                         </div>
-                        <button type="submit" class="cta-button">Send Inquiry</button>
+                        <button type="submit" class="cta-button magnet-target">Send Inquiry</button>
                     </form>
                 </div>
                 
                 <div class="contact-info">
-                    <div style="margin-bottom: 3rem;">
-                        <h4 class="serif" style="color: var(--gold); margin-bottom: 1rem;">Store Address</h4>
-                        <p style="line-height: 1.6; opacity: 0.8;">124, Cross Cut Road, Gandhipuram,<br>Coimbatore, Tamil Nadu 641012</p>
+                    <div>
+                        <div class="contact-info-block">
+                            <h4 class="serif">Store Address</h4>
+                            <p>124, Cross Cut Road, Gandhipuram,<br>Coimbatore, Tamil Nadu 641012</p>
+                        </div>
+                        <div class="contact-info-block">
+                            <h4 class="serif">Showroom Timings</h4>
+                            <p>Monday - Saturday: 10:00 AM - 8:30 PM<br>Sunday: 11:00 AM - 7:00 PM</p>
+                        </div>
                     </div>
-                    <div style="margin-bottom: 3rem;">
-                        <h4 class="serif" style="color: var(--gold); margin-bottom: 1rem;">Showroom Timings</h4>
-                        <p style="line-height: 1.6; opacity: 0.8;">Monday - Saturday: 10:00 AM - 8:30 PM<br>Sunday: 11:00 AM - 7:00 PM</p>
-                    </div>
-                    <div style="width: 100%; height: 300px; background: #222; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center;">
-                        <span style="opacity: 0.5;">Interactive Map Placeholder</span>
+                    <!-- Premium Designed Interactive Map Overlay -->
+                    <div class="map-layer">
+                        <i class="ph ph-map-pin map-icon"></i>
+                        <h5 class="serif">GANDHIPURAM SHOWROOM</h5>
+                        <p>124, Cross Cut Road, Coimbatore, Tamil Nadu 641012</p>
+                        <a href="https://maps.google.com/?q=Aura+Luxury+Jewels+Gandhipuram+Coimbatore" target="_blank" class="cta-button btn-outline magnet-target" style="padding: 0.6rem 1.8rem; font-size: 0.7rem;">Open in Maps</a>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 
+    <!-- Footer Area -->
     <footer>
-        <a href="#" class="footer-logo serif">AURA</a>
+        <a href="#" class="footer-logo serif magnet-target" onclick="showPage('home')">AURA</a>
         <div class="social-links">
-            <a href="#"><i class="ph ph-instagram-logo"></i></a>
-            <a href="#"><i class="ph ph-facebook-logo"></i></a>
-            <a href="#"><i class="ph ph-pinterest-logo"></i></a>
+            <a href="#" class="magnet-target" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+            <a href="#" class="magnet-target" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+            <a href="#" class="magnet-target" aria-label="Pinterest"><i class="ph ph-pinterest-logo"></i></a>
         </div>
-        <p style="margin-bottom: 1rem;">124, Cross Cut Road, Coimbatore | +91 90000 00000</p>
+        <p class="footer-details">124, Cross Cut Road, Coimbatore | +91 90000 00000</p>
         <p class="copyright">© 2026 Aura Luxury Jewels. Crafted by Antigravity Design Lab.</p>
     </footer>
 
-    <script>
-        // Product Data
-        const products = [
-            { id: 1, name: "The Royal Temple Choker", type: "Gold", weight: "45.5g", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1000&auto=format&fit=crop" },
-            { id: 2, name: "Eternal Sparkle Solitaire", type: "Diamond", weight: "1.2 Carat", img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1000&auto=format&fit=crop" },
-            { id: 3, name: "Antique Peacock Jhumkas", type: "Gold", weight: "22.0g", img: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?q=80&w=1000&auto=format&fit=crop" },
-            { id: 4, name: "Celestial Bridal Haaram", type: "Bridal", weight: "120.0g", img: "https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=1000&auto=format&fit=crop" },
-            { id: 5, name: "Contemporary Rose Gold Band", type: "Custom", weight: "8.5g", img: "https://images.unsplash.com/photo-1603561591411-0e7320b97433?q=80&w=1000&auto=format&fit=crop" },
-            { id: 6, name: "Sterling Silver Anklets", type: "Silver", weight: "35.0g", img: "" },
-            { id: 7, name: "Mango Mala Traditional", type: "Gold", weight: "65.0g", img: "https://images.unsplash.com/photo-1598560912005-59a0d5c1a419?q=80&w=1000&auto=format&fit=crop" },
-            { id: 8, name: "Diamond Tennis Bracelet", type: "Diamond", weight: "3.5 Carat", img: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?q=80&w=1000&auto=format&fit=crop" }
-        ];
+    <!-- GSAP Animations Core and ScrollTrigger CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-        // Load Products
-        function loadProducts(filter = 'all') {
-            const featuredGrid = document.getElementById('featured-grid');
-            const collectionsGrid = document.getElementById('collections-grid');
-            
-            if (featuredGrid) {
-                featuredGrid.innerHTML = '';
-                products.slice(0, 6).forEach(p => {
-                    featuredGrid.innerHTML += createProductCard(p);
-                });
-            }
-
-            if (collectionsGrid) {
-                collectionsGrid.innerHTML = '';
-                const filtered = filter === 'all' 
-                    ? products 
-                    : products.filter(p => p.type.toLowerCase().includes(filter.toLowerCase()));
-                
-                filtered.forEach(p => {
-                    collectionsGrid.innerHTML += createProductCard(p);
-                });
-            }
-        }
-
-        function filterProducts(category, event) {
-            // Update UI
-            const items = event.target.parentElement.querySelectorAll('.category-item');
-            items.forEach(i => i.classList.remove('active'));
-            event.target.classList.add('active');
-
-            loadProducts(category);
-        }
-
-        function createProductCard(p) {
-            const imageHtml = p.img 
-                ? `<img src="${p.img}" alt="${p.name}">`
-                : `<div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #111; color: var(--gold); border: 1px dashed var(--gold);">
-                    <i class="ph ph-image-square" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                    <span style="font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7;">Image Coming Soon</span>
-                   </div>`;
-
-            return `
-                <div class="product-card">
-                    <div class="product-image">
-                        ${imageHtml}
-                    </div>
-                    <div class="product-info">
-                        <span class="product-meta">${p.type} | ${p.weight}</span>
-                        <h3 class="serif">${p.name}</h3>
-                        <a href="https://wa.me/919000000000?text=I'm interested in ${p.name}" class="whatsapp-btn">
-                            <i class="ph ph-whatsapp-logo"></i> Get Price on WhatsApp
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Page Navigation
-        function showPage(pageId) {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId + '-page').classList.add('active');
-            window.scrollTo(0, 0);
-            
-            // Update nav active state (optional UI improvement)
-            document.querySelectorAll('.nav-links a').forEach(a => {
-                if(a.getAttribute('href').includes(pageId)) a.style.color = 'var(--gold)';
-                else a.style.color = 'var(--pearl)';
-            });
-        }
-
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 100) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-        });
-
-        // --- Reveal Logic ---
-        function initReveal() {
-            const reveals = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            reveals.forEach(r => observer.observe(r));
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadProducts();
-            initReveal();
-        });
-
-    </script>
+    <!-- Main Logic and Animation Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
 </body>
 </html>
